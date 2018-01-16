@@ -13,6 +13,10 @@ client.getAssets()
 function processAssests(assests) {
   for (var i = 0; i < assests.length; i++) {
     getLogo(assests[i]['sys']['id']);
+
+    if (i == assests.length - 1) {
+      initiateSlideShow();
+    }
   }
 
 }
@@ -26,8 +30,32 @@ function getLogo(imageId) {
       var imageFile = document.createElement('img');
 
       imageFile.src = imageURL;
+      imageFile.style.display = 'none';
       logoDiv.appendChild(imageFile);
 
     });
+}
+
+function initiateSlideShow() {
+  // Begin slide show
+
+  $('body').on('click', function () {
+
+    var images = $('img');
+    var length = images.length;
+    var index = 0;
+
+    setInterval(function () {
+      $('img').css('display', 'none');
+      $('img:eq(' + index + ')').css('display', 'block');
+
+      if (index == length - 1) {
+        index = 0;
+      } else {
+        index++;
+      }
+    }, 3000);
+  });
+
 }
 
